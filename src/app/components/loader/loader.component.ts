@@ -15,9 +15,10 @@ export class LoaderComponent implements OnInit {
   isLoading: Observable<boolean> = this.isLoadingSubject;
 
   constructor(private loadingService: LoadingService) {
+  }
+  
+  ngOnInit() {
     this.isLoading = this.loadingService.loading$;
   }
-
-  ngOnInit() { }
 
 }

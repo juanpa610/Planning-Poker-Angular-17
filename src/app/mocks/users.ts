@@ -1,4 +1,6 @@
-export const users = {
+import { User } from "@gameInterface";
+
+export const users: {users : User[]} = {
   users: [
     {
       "id": 1,
