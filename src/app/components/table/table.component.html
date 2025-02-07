@@ -1,0 +1,25 @@
+<section class="table-poker">
+  <div class="table-poker__container">
+
+
+    <div class="table-poker__cards">
+      <div class="table-poker__card" *ngFor="let user of users; let i = index" [ngClass]="user.className">
+        <div class="table-poker__card-score">
+          <span *ngIf="user.role == 'viewer'">
+            {{ getAcronyNameUser(user.name) | uppercase }}
+          </span>
+        </div>
+        <p class="table-poker__card__name">{{ user.name }}</p>
+      </div>
+    </div>
+
+    <div class="table-poker__container__middle-border">
+      <div class="table-poker__container__end-border">
+        <button class="table-poker__reveal-button">
+          Revelar cartas
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>

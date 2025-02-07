@@ -19,6 +19,12 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "paths": {
+      "@gameService": ["./src/app/services/game.service.ts"],
+      "@loadingService": ["./src/app/services/loading.service.ts"],
+      "@gameInterface": ["./src/app/interfaces/game.interface.ts"],
+      "@components/*": ["./src/app/components/*"]
+    },
     "lib": [
       "ES2022",
       "dom"

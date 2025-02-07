@@ -1,0 +1,89 @@
+@use '../../../styles.scss' as *;
+
+.header {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    margin: 2rem 0 1rem;
+    padding: 0 2rem;
+    color: $color-light;
+
+    &__toolbar {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        @media screen and (min-width: 768px) {
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+    &__logo {
+        margin-right: 1rem;
+
+        &-image {
+            height: 2.5rem;
+
+            @media screen and (min-width: 576px) {
+                height: 3.75rem;
+            }
+        }
+    }
+
+    &__game-name {
+        margin: 0.5rem 0;
+
+        &-text {
+            text-transform: capitalize;
+            margin: 0;
+        }
+    }
+
+    &__user {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        &-acronym {
+            background: rgba(189, 189, 255, 1);
+            color: $color-quinary;
+            border-radius: 50%;
+            min-height: 2rem;
+            font-size: 1rem;
+            min-width: 2rem;
+            width: 2.25rem;
+            height: 2.25rem;
+            display: grid;
+            place-content: center;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 0;
+        }
+    }
+
+    &__invite-button {
+        width: max-content;
+        margin: auto;
+        height: 2.3rem;
+        border-radius: 3.125rem;
+        background: transparent;
+        color: $color-light;
+        border: 1px solid $color-light;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0 1rem;
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        &:disabled {
+            background: #9D9DA14D;
+            cursor: not-allowed;
+            opacity: 0.6;
+            color: $color-light;
+        }
+    }
+}

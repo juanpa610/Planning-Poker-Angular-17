@@ -1,0 +1,40 @@
+@use '../../../styles.scss' as *;
+
+.conten-custom {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+app-header-game {
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+app-table {
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+}
+
+app-card-options {
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+@media (orientation: portrait) {
+    .conten-custom {
+        background: radial-gradient(50% 50% at 50% 50%, $color-quinary 0%, rgba(31, 13, 63, 0.7) 100%);
+    }
+}
+
+@media (orientation: landscape) {
+    .conten-custom {
+        background: radial-gradient(50% 50% at 50% 50%, $color-quinary 0%, #1F0D3F 100%);
+    }
+}

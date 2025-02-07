@@ -2,6 +2,7 @@ module.exports = {
     preset: "jest-preset-angular",
     roots: ["src"],
     setupFilesAfterEnv: ["<rootDir>/setup-jest.ts"],
+    moduleFileExtensions: ["ts", "tsx", "js", "json", "node"],
     moduleNameMapper: {
         "@app/(.*)": "<rootDir>/src/app/$1",
         "@assets/(.*)": "<rootDir>/src/assets/$1",
@@ -11,6 +12,10 @@ module.exports = {
         "@services/(.*)": "<rootDir>/src/app/core/services/$1",
         "@helpers/(.*)": "<rootDir>/src/app/helpers/$1",
         "@shared/(.*)": "<rootDir>/src/app/shared/$1",
+        "@components/(.*)": "<rootDir>/src/app/components/$1",
+        "@gameService": "<rootDir>/src/app/services/game.service.ts",
+        "@loadingService": "<rootDir>/src/app/services/loading.service.ts",
+        "@gameInterface": "<rootDir>/src/app/interfaces/game.interface.ts",
     },
     coverageDirectory: "./coverage",
     collectCoverageFrom: [

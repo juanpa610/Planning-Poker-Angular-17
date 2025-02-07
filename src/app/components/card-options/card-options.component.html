@@ -1,0 +1,8 @@
+<section class="options">
+  <p class="options__title">Elige una carta 👇</p>
+  <div class="options__cards" >
+    <button class="options__cards__button" *ngFor="let card of cardFibonacciOptions" (click)="selectCard(card)">
+      {{card.score}}
+    </button>
+  </div>
+</section>

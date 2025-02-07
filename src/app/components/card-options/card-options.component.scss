@@ -1,0 +1,57 @@
+@use '../../../styles.scss' as *;
+
+.options {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    text-align: center;
+    margin: 1rem 0 2rem;
+
+    &__title {
+        margin-bottom: .5rem;
+        color: $color-light;
+    }
+
+    &__cards {
+        padding: .4rem;
+        margin: 0 1rem;
+        display: flex;
+        flex-direction: row;
+        place-content: center;
+        gap: 1rem;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x proximity;
+        justify-content: flex-start;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        &__button {
+            cursor: pointer;
+            color: $color-light;
+            flex: 0 0 auto;
+            background: transparent;
+            border: 1px solid $color-secondary;
+            width: 3rem;
+            height: 5rem;
+            border-radius: 0.4375rem;
+            transition: all .1s linear;
+
+            &:hover {
+                // transform: translateY(-1%) matrix(1, -.1, 0.2, 0.9, 0, 0);
+                transform: translate(-4%, -4%);
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .options {
+        &__cards {
+            justify-content: center;
+        }
+    }
+}

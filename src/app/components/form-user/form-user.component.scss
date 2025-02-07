@@ -1,0 +1,141 @@
+@use '../../../styles.scss' as *;
+
+.form-user {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    z-index: 50;
+    width: 100%;
+    min-height: 100vh;
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    background: rgba(10, 9, 12, 0.25);
+
+    &__modal {
+        box-shadow: 0px 0px 20px 0px rgba(189, 189, 255, 0.2) inset;
+        box-shadow: 0px 0px 15px 0px rgba(100, 41, 205, 1);
+        background: rgba(31, 13, 63, 1);
+        border: 1px solid $color-secondary;
+        border-radius: 25px;
+        min-height: 294px;
+        padding: .5rem;
+        width: 90%;
+        max-width: 514px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__label {
+        font-size: 1rem;
+        color: $color-light;
+        font-weight: 600;
+        line-height: 200%;
+    }
+
+    &__input {
+        outline: none;
+        color: $color-light;
+        background: transparent;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+        width: 18.25rem;
+        height: 2.5rem;
+        padding: 0 0 0 1rem;
+        border-radius: 6.25rem;
+        border: 1px solid $color-secondary;
+
+        &::placeholder {
+            color:  rgba(255, 255, 255, 0.288);
+        }
+
+        &:active {
+            border: 1px solid $color-secondary;
+        }
+    }
+
+    &__role-selection {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+    }
+
+    &__radio-group {
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    &__radio-input {
+        width: 1rem;
+        height: 1rem;
+        cursor: pointer;
+        position: relative;
+
+        &::before {
+            content: '';
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            box-shadow: 0px 0px 5px 0px $color-primary inset;
+            background: $color-primary;
+            display: block;
+            visibility: visible;
+            border: 1px solid $color-secondary;
+        }
+
+        &:checked::after {
+            content: '';
+            width: .5rem;
+            height: .5rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            position: absolute;
+            background: $color-secondary;
+            display: block;
+            visibility: visible;
+        }
+    }
+
+    &__radio-label {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    &__submit-button {
+        width: min-content;
+        margin: auto;
+        height: 2.3rem;
+        border-radius: 3.125rem;
+        background: $color-light;
+        color: $color-quinary;
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        padding: 0 1rem;
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        &:disabled {
+            background: #9D9DA14D;
+            cursor: not-allowed;
+            opacity: 0.6;
+            color: $color-light;
+        }
+    }
+}

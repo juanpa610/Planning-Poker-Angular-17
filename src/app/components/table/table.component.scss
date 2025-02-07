@@ -1,0 +1,181 @@
+@use '../../../styles.scss' as *;
+
+.table-poker {
+    width: 100%;
+    padding: 0rem 0rem;
+    background: transparent;
+    position: relative;
+    display: grid;
+    place-content: center;
+    flex: auto;
+    margin: 6rem 0;
+
+    &__container {
+        border-radius: 17.25rem;
+        border: 2px solid $color-primary;
+        box-shadow: 0 0 20px 0 rgba(189, 189, 255, 0.2) inset;
+        box-shadow: 0 0 15px 0 $color-primary ;
+        max-width: 32.5625rem;
+        position: relative;
+
+        &__middle-border {
+            border-radius: 17.25rem;
+            position: absolute;
+            width: 95%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 90%;
+            border: 2px solid $color-primary ;
+            box-shadow: 0 0 20px 0 rgba(189, 189, 255, 0.6) inset;
+            box-shadow: 0 12px 24px 0 rgba(100, 41, 205, 0.6);
+        }
+
+        &__end-border {
+            border-radius: 17.25rem;
+            position: absolute;
+            width: 95%;
+            height: 90%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid $color-primary ;
+            box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.06);
+            background: rgba(31, 13, 63, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    &__cards {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    &__card {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: .3rem;
+    
+        &__name {
+            max-width: 4rem;
+            text-overflow: "";
+            text-wrap: nowrap;
+            overflow: hidden;
+        }
+        &--viewer {
+            .table-poker__card-score {
+                width: 3.5rem;
+                height: 3.5rem;
+                background: rgba(189, 189, 255, 1);
+                border-radius: 50%;
+                display: grid;
+                place-content: center;
+            }
+        }
+        &--player,
+        &--playerOwner {
+            .table-poker__card-score {
+                width: 2.1875rem;
+                height: 3.75rem;
+                border-radius: 0.4375rem;
+                opacity: 0px;
+                border: 1px solid rgba(187, 101, 255, 1);
+                background: transparent;
+                box-shadow: 0px 0px 6px 0px rgba(189, 189, 255, 0.6) inset;
+                box-shadow: 0px 5px 10px 0px rgba(100, 41, 205, 0.6);
+            }
+        }
+    }
+
+    &__reveal-button {
+        width: max-content;
+        margin: auto;
+        height: 2.3rem;
+        border-radius: 3.125rem;
+        background: $color-primary;
+        color: $color-light;
+        border: 1px solid $color-primary;
+        font-size: 1rem;
+        padding: 0 1rem;
+        cursor: pointer;
+    }
+}
+
+@media (orientation: portrait) {
+    .table-poker {
+        &__container {
+            width: 13rem;
+            min-height: 25rem;
+
+            &__middle-border {
+                height: 90%;
+                width: 90%;
+            }
+
+            &__end-border {
+                height: 93%;
+                width: 90%;
+                padding: .5rem;
+            }
+        }
+    }
+}
+
+@media (orientation: landscape) {
+    .table-poker {
+        &__container {
+            min-height: 17rem;
+            width: 32.5625rem;
+        }
+    }
+}
+
+.table-poker__card--playerOwner {
+    top: 100%;
+    transform: translate(-50%, 10%);
+    left: 50%;
+}
+.table-poker__card--viewer {
+    span {
+        color: $color-quinary;
+        font-weight: 700;
+    }
+    top: 0;
+    transform: translate(-50%, -110%);
+    left: 50%;
+}
+.nth-child-1 {
+    top: 0;
+    left: 0;
+    transform:translate(-70%, -50%);
+}
+.nth-child-2 {
+    top: 50%;
+    left: 0;
+    transform: translate(-107%, -50%);
+}
+.nth-child-3 {
+    top: 100%;
+    left: 0;
+    transform: translate(-60%, -50%);
+}
+.nth-child-4 {
+    top: 0;
+    right: 0;
+    transform: translate(70%, -50%);
+}
+.nth-child-5 {
+    top: 50%;
+    right: 0;
+    transform: translate(107%, -50%);
+}
+.nth-child-6 {
+    top: 100%;
+    right: 0;
+    transform: translate(60%, -50%);
+}

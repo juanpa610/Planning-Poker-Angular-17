@@ -1,0 +1,24 @@
+<section class="create-game">
+    <header class="create-game__header">
+        <figure class="create-game__header__logo">
+            <img class="create-game__header__logo__img" src="../../../assets/svgs/ficha-poker-pragma.svg"
+                alt="Logo Poker Pragma" />
+            <figcaption class="create-game__header__logo__caption">Crear partida</figcaption>
+        </figure>
+    </header>
+
+    <div class="create-game__form-container">
+        <form [formGroup]="gameForm" (ngSubmit)="onSubmit()" class="create-game__form">
+
+            <div class="create-game__form__input-control">
+                <label for="nameGame" class="create-game__form__label">Nombra la partida</label>
+                <input id="nameGame" class="create-game__form__input" placeholder="Sprint 32" maxlength="20"
+                    formControlName="nameGame" type="text" (input)="validateCharacterForm()" />
+            </div>
+
+            <button class="create-game__form__button" type="submit" [disabled]="gameForm.invalid">
+                Crear partida
+            </button>
+        </form>
+    </div>
+</section>

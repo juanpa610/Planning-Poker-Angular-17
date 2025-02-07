@@ -1,0 +1,29 @@
+<section class="form-user" *ngIf="showModalUserForm">
+    <article class="form-user__modal">
+        <div class="form-user__container">
+            <form class="form-user__form" [formGroup]="formUser" (ngSubmit)="onSubmit()">
+                <label class="form-user__label" for="nameUser">Tu Nombre</label>
+                <input id="nameUser"  class="form-user__input" placeholder="Luisa" maxlength="20" formControlName="nameUser"
+                    type="text" (input)="validateCharacterForm()" />
+
+                <div class="form-user__role-selection">
+
+                    <div class="form-user__radio-group">
+                        <label class="form-user__radio-label" for="playerOwner">Jugador</label>
+                        <input id="playerOwner" type="radio" class="form-user__radio-input" formControlName="role" value="playerOwner" required />
+                    </div>
+
+                    <div class="form-user__radio-group">
+                        <label class="form-user__radio-label" for="viewer">Espectador</label>
+                        <input id="viewer" type="radio" class="form-user__radio-input" formControlName="role" value="viewer" required />
+                    </div>
+
+                </div>
+
+                <button class="form-user__submit-button" type="submit" [disabled]="formUser.invalid">
+                    Continuar
+                </button>
+            </form>
+        </div>
+    </article>
+</section>
