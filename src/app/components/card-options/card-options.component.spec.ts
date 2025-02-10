@@ -42,7 +42,8 @@ describe('CardOptionsComponent', () => {
 
   it('should end card to gameService ', () => {
     let cardMock: Card = {
-      score: '☕'
+      score: '☕',
+      selected: false
     };
 
     component.selectCard(cardMock);

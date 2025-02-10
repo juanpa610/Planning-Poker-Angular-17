@@ -12,20 +12,18 @@ import { LoadingService } from '@loadingService';
   templateUrl: './form-user.component.html',
   styleUrl: './form-user.component.scss',
 })
-export class FormUserComponent  implements OnInit {
+export class FormUserComponent implements OnInit {
+
+  showModalUserForm: boolean = true;
 
   public formUser: FormGroup = this.formBuilder.group({
-    nameUser: ['', [
+    userName: ['', [
       Validators.required,
       Validators.minLength(5),
       Validators.maxLength(20),
-      Validators.pattern(
-        /^(?=(?:[^0-9]*[0-9]){0,3}[^0-9]*$)[ñÑa-zA-Z0-9\s]{5,20}$/
-      ),]], 
+      Validators.pattern(/^(?!(?:\D*\d){4})(?!^\d+$)[\d\D]*$/),]],
     role: ['', Validators.required]
   });
-
-  showModalUserForm: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -33,12 +31,19 @@ export class FormUserComponent  implements OnInit {
     private loadingService: LoadingService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (sessionStorage.getItem('gameName') && sessionStorage.getItem('userName')) {
+      this.showModalUserForm = false;
+      this.gameService.setUserName(sessionStorage.getItem('userName')!)
+      this.gameService.newGame(sessionStorage.getItem('gameName')!)
+    }
+  }
 
   onSubmit() {
     if (this.formUser.valid) {
       this.loadingService.show();
-      this.gameService.setNameUser(this.formUser.get('nameUser')?.value);
+      sessionStorage.setItem('userName', this.formUser.get('userName')?.value);
+      this.gameService.setUserName(this.formUser.get('userName')?.value);
       this.gameService.setRoleUser(this.formUser.get('role')?.value);
       setTimeout(() => {
         this.loadingService.hide();
@@ -47,9 +52,19 @@ export class FormUserComponent  implements OnInit {
     }
   }
 
+  getUserNameError(): string {
+    if (this.formUser.get('userName')?.invalid) {
+      if (this.formUser.get('userName')?.hasError('required')) return 'Por favor ingresa un nombre';
+      if (this.formUser.get('userName')?.hasError('minlength')) return 'Por favor ingresa minimo 5 caracteres';
+      if (this.formUser.get('userName')?.hasError('maxlength')) return 'Solo se permiten 20 caracteres';
+      if (this.formUser.get('userName')?.hasError('pattern')) return 'Solo se permiten 3 numeros';
+    }
+    return '';
+  }
+
   validateCharacterForm() {
     let valor = '';
-    let field = this.formUser.controls['nameUser'].value;
+    let field = this.formUser.controls['userName'].value;
     if (field != undefined) {
       for (let i = 0; i < field.length; i++) {
         let tecla = field[i].charCodeAt(0);
@@ -59,7 +74,7 @@ export class FormUserComponent  implements OnInit {
         }
       }
     }
-    this.formUser.patchValue({ nameUser: valor });
+    this.formUser.patchValue({ userName: valor });
     this.formUser.updateValueAndValidity();
   }
 

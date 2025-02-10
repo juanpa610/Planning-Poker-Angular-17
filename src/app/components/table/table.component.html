@@ -2,9 +2,12 @@
   <div class="table-poker__container">
 
 
-    <div class="table-poker__cards">
+    <div class="table-poker__cards" *ngIf="users.length > 0">
       <div class="table-poker__card" *ngFor="let user of users; let i = index" [ngClass]="user.className">
-        <div class="table-poker__card-score">
+        <div class="table-poker__card__score">
+          <p *ngIf=" user.role !== 'viewer' && hasRevealCards">
+            {{ user.score }}
+          </p>
           <span *ngIf="user.role == 'viewer'">
             {{ getAcronyNameUser(user.name) | uppercase }}
           </span>
@@ -15,7 +18,7 @@
 
     <div class="table-poker__container__middle-border">
       <div class="table-poker__container__end-border">
-        <button class="table-poker__reveal-button">
+        <button class="table-poker__reveal-button" *ngIf="isSelectCard" (click)="revealCards()">
           Revelar cartas
         </button>
       </div>

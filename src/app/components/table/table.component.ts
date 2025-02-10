@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { User } from '@gameInterface';
+import { Card, User } from '@gameInterface';
 import { GameService } from '@gameService';
+import { LoadingService } from '@loadingService';
+
 
 @Component({
   selector: 'app-table',
@@ -14,24 +16,54 @@ import { GameService } from '@gameService';
 })
 export class TableComponent implements OnInit {
 
+  hasRevealCards: boolean = false;
+  isSelectCard: boolean = false;
+  usersBack: User[] = [];
   users: User[] = [];
+  nameUser: string = '';
   user: User = {
     id: 0,
     name: '',
-    score: 0,
+    score: '0',
     role: 'player',
   };
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService, private loadingService: LoadingService) { }
 
   async ngOnInit() {
     await this.getUsersToGame();
 
-    this.addUserToListGame();
-    this.gameService._nameUserscore$.subscribe((name) => {
-      if (name !== 'loading') this.addUserToListGame();
+    this.gameService.isSelectedCar$.subscribe((value: boolean) => {
+      this.isSelectCard = value;
     });
 
+    this.gameService.userName$.subscribe((naUser) => {
+      this.nameUser = naUser;
+      this.users = [];
+      this.addUserToListGame();
+    });
+
+    this.gameService.cardScore$.subscribe((card: Card) => {
+      this.setScoreUser(card);
+    });
+  }
+
+  setScoreUser(card: Card) {
+    this.users.filter((user) => {
+      if (user.role == 'playerOwner') {
+        user.score = card.score;
+      }
+    });
+  }
+
+  revealCards() {
+    this.loadingService.show();
+    setTimeout(() => {
+      this.hasRevealCards = true;
+      this.gameService.setRevealCards(this.hasRevealCards);
+      this.gameService.sendUsersCardsScore(this.users);
+      this.loadingService.hide();
+    }, 1000);
   }
 
   getAcronyNameUser(name: string): string {
@@ -53,7 +85,7 @@ export class TableComponent implements OnInit {
   getUsersToGame() {
     return new Promise<void>((resolve, reject) => {
       this.gameService.getUsersGame().subscribe((users: User[]) => {
-        this.users = users.map((_user: User) => {
+        this.usersBack = users.map((_user: User) => {
           return _user
         });
 
@@ -63,14 +95,15 @@ export class TableComponent implements OnInit {
   }
 
   addUserToListGame() {
-    const idUser = this.users.length + 1;
-    const nameUser = this.gameService.nameUser;
+    this.users = [...this.usersBack];
 
+    const idUser = this.users.length + 1;
+    let nameUser = this.nameUser;
     const roleUser = this.gameService.roleUser;
 
     this.user = {
       id: idUser,
-      score: 0,
+      score: '0',
       name: nameUser,
       role: roleUser,
     }

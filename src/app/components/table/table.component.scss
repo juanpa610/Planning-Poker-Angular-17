@@ -67,35 +67,35 @@
             text-wrap: nowrap;
             overflow: hidden;
         }
-        &--viewer {
-            .table-poker__card-score {
-                width: 3.5rem;
-                height: 3.5rem;
-                background: rgba(189, 189, 255, 1);
-                border-radius: 50%;
-                display: grid;
-                place-content: center;
-            }
+        &--viewer &__score {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: rgba(189, 189, 255, 1);
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
         }
-        &--player,
-        &--playerOwner {
-            .table-poker__card-score {
+        &--player &__score, &--playerOwner &__score {
                 width: 2.1875rem;
                 height: 3.75rem;
                 border-radius: 0.4375rem;
-                opacity: 0px;
                 border: 1px solid rgba(187, 101, 255, 1);
                 background: transparent;
                 box-shadow: 0px 0px 6px 0px rgba(189, 189, 255, 0.6) inset;
                 box-shadow: 0px 5px 10px 0px rgba(100, 41, 205, 0.6);
-            }
+                display: grid;
+                place-content: center;
+            
+        }
+        &--playerOwner &__score {
+            background: $color-secondary;
         }
     }
 
     &__reveal-button {
         width: max-content;
         margin: auto;
-        height: 2.3rem;
+        min-height: 2.3rem;
         border-radius: 3.125rem;
         background: $color-primary;
         color: $color-light;
@@ -125,6 +125,7 @@
         }
     }
 }
+
 
 @media (orientation: landscape) {
     .table-poker {
@@ -157,7 +158,7 @@
 .nth-child-2 {
     top: 50%;
     left: 0;
-    transform: translate(-107%, -50%);
+    transform: translate(-120%, -50%);
 }
 .nth-child-3 {
     top: 100%;
@@ -172,7 +173,7 @@
 .nth-child-5 {
     top: 50%;
     right: 0;
-    transform: translate(107%, -50%);
+    transform: translate(120%, -50%);
 }
 .nth-child-6 {
     top: 100%;

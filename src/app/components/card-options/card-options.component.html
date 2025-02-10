@@ -1,7 +1,11 @@
-<section class="options">
+<section class="options" *ngIf="rolUser !== 'viewer' " >
   <p class="options__title">Elige una carta 👇</p>
   <div class="options__cards" >
-    <button class="options__cards__button" *ngFor="let card of cardFibonacciOptions" (click)="selectCard(card)">
+    <button 
+      *ngFor="let card of cardFibonacciOptions; let i = index" (click)="selectCard(card)"
+      class="options__cards__button" 
+      [ngClass]="{'options__cards__button--selected': card.selected}"
+      >
       {{card.score}}
     </button>
   </div>

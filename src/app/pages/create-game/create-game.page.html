@@ -11,9 +11,13 @@
         <form [formGroup]="gameForm" (ngSubmit)="onSubmit()" class="create-game__form">
 
             <div class="create-game__form__input-control">
-                <label for="nameGame" class="create-game__form__label">Nombra la partida</label>
-                <input id="nameGame" class="create-game__form__input" placeholder="Sprint 32" maxlength="20"
-                    formControlName="nameGame" type="text" (input)="validateCharacterForm()" />
+                <label for="gameName" class="create-game__form__label">Nombra la partida</label>
+                <input id="gameName" class="create-game__form__input" placeholder="Sprint 32" maxlength="20"
+                    formControlName="gameName" type="text" (input)="validateCharacterForm()" />
+                <span class="create-game__form__input__error" 
+                    [ngClass]="{'create-game__form__input__error--right': getFormControl('gameName')?.touched &&  getFormControl('gameName')?.invalid}" >
+                    {{ getGameNameError() }}
+                </span>
             </div>
 
             <button class="create-game__form__button" type="submit" [disabled]="gameForm.invalid">

@@ -12,24 +12,41 @@ import { GameService } from '@gameService';
 })
 export class HeaderGameComponent implements OnInit {
 
-  constructor(public gameService: GameService) {
+  gameName: string = '';
+  userName: string = '';
+
+  constructor(private gameService: GameService) {
   }
 
   ngOnInit() {
+    this.getNames();
   }
 
-  getAcronyNameUser(): string {
-    if (!this.gameService.nameUser) return 'EX';
-    let nameCapitalized = '';
-    const nameUserSplit = this.gameService.nameUser.split(' ');
+  getNames() {
+    if (sessionStorage.getItem('gameName')) this.gameName = sessionStorage.getItem('gameName')!;
+    if (sessionStorage.getItem('userName')) this.userName = sessionStorage.getItem('userName')!;
+    this.gameService.userName$.subscribe((userName: string) => {
+      userName = userName.trim();
+    });
 
-    if (nameUserSplit.length >= 2) {
-      nameCapitalized = nameUserSplit[0].charAt(0) + nameUserSplit[1].charAt(0);
+    this.gameService.gameName$.subscribe((gameName: string) => {
+      gameName = gameName.trim();
+    });
+  }
+
+  getAcronyUserName(): string {
+
+    if (!this.userName) return 'EX';
+    let nameCapitalized = '';
+    const userNameSplit = this.userName.split(' ');
+
+    if (userNameSplit.length >= 2) {
+      nameCapitalized = userNameSplit[0].charAt(0) + userNameSplit[1].charAt(0);
     } else {
-      
-      nameCapitalized = this.gameService.nameUser.length > 1 
-        ?  this.gameService.nameUser.substring(0,2)
-        :  this.gameService.nameUser.substring(0,1) ;
+
+      nameCapitalized = this.userName.length > 1
+        ? this.userName.substring(0, 2)
+        : this.userName.substring(0, 1);
     }
     return nameCapitalized;
   }

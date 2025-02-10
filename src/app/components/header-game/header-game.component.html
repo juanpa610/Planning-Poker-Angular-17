@@ -4,10 +4,10 @@
                 <img class="header__logo-image" src="../../../assets/svgs/ficha-poker-pragma.svg" alt="Logo Poker Pragma" />
             </div>
             <h1 class="header__game-name">
-                <span class="header__game-name-text">{{ gameService.nameGame || 'ewhfwjgefwygefjwgyf' }}</span>
+                <span class="header__game-name-text">{{ gameName || 'rgeg' }}</span>
             </h1>
             <div class="header__user">
-                <p class="header__user-acronym">{{ getAcronyNameUser() }}</p>
+                <p class="header__user-acronym">{{ getAcronyUserName() }}</p>
                 <button class="header__invite-button">Invitar jugadores</button>
             </div>
     </nav>

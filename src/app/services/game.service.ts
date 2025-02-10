@@ -8,48 +8,65 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GameService {
 
-  private _nameGame : string = 'Sprint 32';
-  private _nameUser : string = 'loading';
-  private _roleUser : Role = 'playerOwner';
+  private _userName: string = 'loading';
+  private _roleUser: Role = 'playerOwner';
 
-  private _nameUserSubject = new BehaviorSubject<string>(this._nameUser); 
-  _nameUserscore$ = this._nameUserSubject.asObservable();
+  private _userNameSubject = new BehaviorSubject<string>(this._userName);
+  userName$ = this._userNameSubject.asObservable();
 
-  private cardSubject = new Subject<Card>(); 
+  private _roleUserSubject = new BehaviorSubject<Role>(this._roleUser);
+  roleUser$ = this._roleUserSubject.asObservable();
+
+  private cardSubject = new Subject<Card>();
   cardScore$ = this.cardSubject.asObservable();
 
-  constructor(private http: HttpClient ) { 
+  private isSelectedcardSubject = new Subject<boolean>();
+  isSelectedCar$ = this.isSelectedcardSubject.asObservable();
+
+  private hasRevealedCardsSubject = new Subject<boolean>();
+  hasRevealedCards$ = this.hasRevealedCardsSubject.asObservable();
+
+  private gameNameSubject = new BehaviorSubject<string>('Sprint 32');
+  gameName$ = this.gameNameSubject.asObservable();
+
+  private _usersCardsScoreSubject = new Subject<User[]>();
+  usersCardsScore$ = this._usersCardsScoreSubject.asObservable();
+
+
+  constructor(private http: HttpClient) {
   }
 
-  newGame(nameGame: string) {
-    this._nameGame = nameGame;
+  newGame(gameName: string) {
+    this.gameNameSubject.next(gameName);
   }
-  
-  get nameGame () {
-    return this._nameGame;
+
+  setUserName(userName: string) {
+    this._userNameSubject.next(userName);
   }
-  setNameUser(nameUser: string) {
-    this._nameUser = nameUser;
-    this._nameUserSubject.next(this._nameUser);
-  }
-  
-  get nameUser () {
-    return this._nameUser;
+
+  setRevealCards(value: boolean) {
+    this.hasRevealedCardsSubject.next(value);
   }
 
   setRoleUser(roleUser: Role) {
     this._roleUser = roleUser;
+    this._roleUserSubject.next(roleUser);
   }
 
-  get roleUser () {
+  get roleUser() {
     return this._roleUser;
   }
 
   setCartScore(card: Card) {
     this.cardSubject.next(card);
+    this.isSelectedcardSubject.next(true);
   }
 
-  getUsersGame() : Observable<User[]>{
+  sendUsersCardsScore(usersCards : User[]) {
+    this._usersCardsScoreSubject.next(usersCards);
+  }
+
+  getUsersGame(): Observable<User[]> {
     return this.http.get<{ users: User[] }>('/../assets/files/users.json').pipe(
       map((response) =>
         response.users

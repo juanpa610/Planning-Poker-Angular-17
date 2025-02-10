@@ -6,6 +6,7 @@ $color-secondary: #BB65FF;
 $color-tertiary: #6030ff;
 $color-quaternary: #BDBDFF;
 $color-quinary: #330072;
+$color-red: red;
 $color-light: #F6F7FC;
 $color-background-main: radial-gradient(50% 50% at 50% 50%, $color-quinary 0%, rgba(31, 13, 63, 0.7) 100%);
 
@@ -19,6 +20,19 @@ $color-background-main: radial-gradient(50% 50% at 50% 50%, $color-quinary 0%, r
 html{
     scroll-behavior: smooth;
     background-color: #121212;
+    font-size: 100%;
+    transition: all 0.3s ease ;
+    font-size: 85%;
+    @media screen  and (min-width: 360px) {
+        font-size: 87%;
+    }
+    @media screen  and (min-width: 425px) {
+        font-size: 93%;
+    }
+    @media screen  and (min-width: 768px) {
+        font-size: 100%;
+        
+    }
 }
 
 body {

@@ -2,8 +2,8 @@
     <article class="form-user__modal">
         <div class="form-user__container">
             <form class="form-user__form" [formGroup]="formUser" (ngSubmit)="onSubmit()">
-                <label class="form-user__label" for="nameUser">Tu Nombre</label>
-                <input id="nameUser"  class="form-user__input" placeholder="Luisa" maxlength="20" formControlName="nameUser"
+                <label class="form-user__label" for="userName">Tu Nombre</label>
+                <input id="userName"  class="form-user__input" placeholder="Luisa" maxlength="20" formControlName="userName"
                     type="text" (input)="validateCharacterForm()" />
 
                 <div class="form-user__role-selection">

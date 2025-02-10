@@ -28,8 +28,6 @@ describe('GameService', () => {
   });
 
   it('should initialize with default values', () => {
-    expect(service.nameGame).toBe('Sprint 32')
-    expect(service.nameUser).toBe('loading')
     expect(service.roleUser).toBe('playerOwner')
   });
 
@@ -39,19 +37,20 @@ describe('GameService', () => {
     let spynewGame = jest.spyOn(service, 'newGame');
     
     service.newGame(newGame);
-    expect(service.nameGame).toBe(newGame);
+    service.gameName$.subscribe((game) => {
+      expect(game).toBe(newGame);
+    })
     expect(spynewGame).toHaveBeenCalledWith(newGame);
   });
 
   it('should update name user and emit new value', () => {
     const newName = 'Sprint 33';
 
-    service._nameUserscore$.subscribe((name) => {
+    service.userName$.subscribe((name) => {
       expect(name).toBe(newName);
     });
 
-    service.setNameUser(newName);
-    expect(service.nameUser).toBe(newName)
+    service.setUserName(newName);
   });
 
   it('should set role user', () => {

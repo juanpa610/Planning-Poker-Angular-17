@@ -1,30 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { GameService } from '@gameService';
 import { LoadingService } from '@loadingService';
-import { HeaderGameComponent } from '@components/header-game/header-game.component';
-import { TableComponent } from '@components/table/table.component';
-import { CardOptionsComponent } from '@components/card-options/card-options.component';
-import { FormUserComponent } from '@components/form-user/form-user.component';
 
 @Component({
     selector: 'app-create-game',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterOutlet, FormUserComponent, HeaderGameComponent, TableComponent, CardOptionsComponent],
+    imports: [CommonModule, ReactiveFormsModule,],
     templateUrl: './create-game.page.html',
     styleUrl: './create-game.page.scss',
 })
 export class CreateGamePage implements OnInit {
 
     public gameForm: FormGroup = this.formBuilder.group({
-        nameGame: ['', [
+        gameName: ['', [
             Validators.required,
             Validators.minLength(5),
             Validators.maxLength(20),
-            Validators.pattern(/^(?=(?:[^0-9]*[0-9]){0,3}[^0-9]*$)[ñÑa-zA-Z0-9\s]{5,20}$/),]],
-    })
+            Validators.pattern(/^(?!(?:\D*\d){4})(?!^\d+$)[\d\D]*$/),]],
+    });
 
     constructor(private formBuilder: FormBuilder,
         private router: Router,
@@ -35,9 +31,23 @@ export class CreateGamePage implements OnInit {
     ngOnInit() {
     }
 
+    getFormControl(controlName: string) {
+        return this.gameForm.get(controlName);
+    }
+
+    getGameNameError(): string {
+        if (this.gameForm.get('gameName')?.invalid) {
+            if (this.gameForm.get('gameName')?.hasError('required')) return 'Por favor ingresa un nombre';
+            if (this.gameForm.get('gameName')?.hasError('minlength')) return 'Por favor ingresa minimo 5 caracteres';
+            if (this.gameForm.get('gameName')?.hasError('maxlength')) return 'Solo se permiten 20 caracteres';
+            if (this.gameForm.get('gameName')?.hasError('pattern')) return 'Solo se permiten 3 numeros';
+        }
+        return '';
+    }
+
     validateCharacterForm() {
         let valor = '';
-        let field = this.gameForm.controls['nameGame'].value;
+        let field = this.gameForm.controls['gameName'].value;
         if (field != undefined) {
             for (let i = 0; i < field.length; i++) {
                 let tecla = field[i].charCodeAt(0);
@@ -47,18 +57,20 @@ export class CreateGamePage implements OnInit {
                 }
             }
         }
-        this.gameForm.patchValue({ nameGame: valor });
+        this.gameForm.patchValue({ gameName: valor });
         this.gameForm.updateValueAndValidity();
     }
 
     onSubmit() {
         if (this.gameForm.valid) {
-            this.gameService.newGame(this.gameForm.get('nameGame')?.value);
+            const gameName = this.gameForm.get('gameName')?.value;
+            this.gameService.newGame(gameName);
+            sessionStorage.setItem('gameName', gameName);
             this.loadingService.show();
             setTimeout(() => {
                 this.router.navigate(['/game']);
                 this.loadingService.hide();
-            }, 1000);
+            }, 500);
         }
     }
 

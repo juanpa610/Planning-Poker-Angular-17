@@ -14,6 +14,7 @@ export class HomePage implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    sessionStorage.clear();
     setTimeout(() => {
       this.router.navigate(['/create-game']);
     }, 2000);

@@ -10,10 +10,12 @@
     &__title {
         margin-bottom: .5rem;
         color: $color-light;
+        font-size: 1.3125rem;
+        font-weight: 500;
     }
 
     &__cards {
-        padding: .4rem;
+        padding: 1rem .4rem;
         margin: 0 1rem;
         display: flex;
         flex-direction: row;
@@ -30,6 +32,7 @@
         }
 
         &__button {
+            box-shadow: 2px 2px 10px 0px #FFFFFF3D;
             cursor: pointer;
             color: $color-light;
             flex: 0 0 auto;
@@ -40,9 +43,13 @@
             border-radius: 0.4375rem;
             transition: all .1s linear;
 
+            &--selected {
+                background-color: $color-secondary;
+            }
+
             &:hover {
                 // transform: translateY(-1%) matrix(1, -.1, 0.2, 0.9, 0, 0);
-                transform: translate(-4%, -4%);
+                transform: translate(-1%, -1%);
             }
         }
     }
