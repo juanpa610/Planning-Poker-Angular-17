@@ -66,6 +66,16 @@ export class TableComponent implements OnInit {
     }, 1000);
   }
 
+  newGame () {
+    this.loadingService.show();
+    setTimeout(() => {
+      this.hasRevealCards = false;
+      this.gameService.setRevealCards(this.hasRevealCards);
+      this.loadingService.hide();
+      this.gameService.resetIsSelectedCard(this.hasRevealCards);
+    }, 1000);
+  }
+
   getAcronyNameUser(name: string): string {
     if (!name) return 'EX';
     let nameCapitalized = '';

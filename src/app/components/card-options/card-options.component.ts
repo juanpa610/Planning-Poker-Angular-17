@@ -3,6 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Card, Role, User } from '@gameInterface';
 import { GameService } from '@gameService';
 
+
+interface Score {
+  [key: string]: number
+}
+
 @Component({
   selector: 'app-card-options',
   standalone: true,
@@ -28,6 +33,9 @@ export class CardOptionsComponent implements OnInit {
     { score: '?', selected: false },
     { score: '☕', selected: false }
   ];
+  averageScore: number | string = 0;
+  scoreCount: Score = {};
+  scoreQuestion: string[] = [];
 
   constructor(private gameService: GameService) { }
 
@@ -36,12 +44,17 @@ export class CardOptionsComponent implements OnInit {
       this.rolUser = roleUser;
     });
 
-    this.gameService.hasRevealedCards$.subscribe((value) => {
-      this.hasRevealedCards = value;
-
-      this.gameService.usersCardsScore$.subscribe((usersCards: User[]) => {
-        this.calculateAverageCards(usersCards)
-      });
+    this.gameService.hasRevealedCards$.subscribe((hasRevealedCard) => {
+      this.hasRevealedCards = hasRevealedCard;
+      if (hasRevealedCard) {
+        this.gameService.usersCardsScore$.subscribe((usersCards: User[]) => {
+          this.calculateAverageCards(usersCards)
+        });
+      } else {
+        for (let index = 0; index < this.cardFibonacciOptions.length; index++) {
+          this.cardFibonacciOptions[index].selected = false;
+        }
+      }
     });
   }
 
@@ -64,28 +77,32 @@ export class CardOptionsComponent implements OnInit {
   }
 
   calculateAverageCards(usersCards: User[]) {
-    let scores = usersCards
-      .filter(users => users.role != 'viewer')
+    let usersCardsToFilter = [...usersCards.filter(users => users.role != 'viewer')];
+
+    let scoreCoffeeBreak = usersCardsToFilter.filter(users => users.score == '☕');
+    this.scoreQuestion = usersCardsToFilter
+      .filter((users: User) => users.score == '?')
+      .map(user => user.score);
+
+    let scoresNumbers = usersCardsToFilter
+      .filter(users => users.score != '?' && users.score != '☕')
       .map(user => Number(user.score));
 
-    console.log(scores)
+    let sumScores: number = scoresNumbers.reduce((sum, score) => sum + score, 0);
+    let average = sumScores / scoresNumbers.length;
 
-    let sumScores: number = scores.reduce((sum, score) => sum + score, 0);
-    let average = sumScores / scores.length;
+    this.averageScore = scoreCoffeeBreak.length ? 'Coffee break!' : average.toFixed(2);
 
-    const scoresCount: Record<string, number> = {};
+    const scoreCount: Record<string, number> = {};
 
-    scores.forEach(score => {
-      if (scoresCount[score]) {
-        scoresCount[score] = scoresCount[score] + 1
+    scoresNumbers.forEach(score => {
+      if (scoreCount[score]) {
+        scoreCount[score] = scoreCount[score] + 1
       } else {
-        scoresCount[score] = 1
+        scoreCount[score] = 1
       }
     });
 
-    console.log(scoresCount,  average.toFixed(2));
-
-    // TODO: Validar cuando es NaN OJO
+    this.scoreCount = scoreCount;
   }
-
 }

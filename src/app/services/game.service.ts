@@ -62,6 +62,10 @@ export class GameService {
     this.isSelectedcardSubject.next(true);
   }
 
+  resetIsSelectedCard(value: boolean) {
+    this.isSelectedcardSubject.next(value);
+  }
+
   sendUsersCardsScore(usersCards : User[]) {
     this._usersCardsScoreSubject.next(usersCards);
   }

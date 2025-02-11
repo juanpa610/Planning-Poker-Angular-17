@@ -18,8 +18,8 @@
 
     <div class="table-poker__container__middle-border">
       <div class="table-poker__container__end-border">
-        <button class="table-poker__reveal-button" *ngIf="isSelectCard" (click)="revealCards()">
-          Revelar cartas
+        <button class="table-poker__reveal-button" *ngIf="isSelectCard" (click)="hasRevealCards ? newGame() : revealCards()">
+          {{hasRevealCards ? 'Nueva Partida' : 'Revelar cartas'}}
         </button>
       </div>
     </div>

@@ -7,6 +7,19 @@
     text-align: center;
     margin: 1rem 0 2rem;
 
+    &__average {
+        &__title{
+            font-size: 2rem;
+            color: $color-secondary;
+            font-weight: 700;
+        }
+        &__score{
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+    }
+
     &__title {
         margin-bottom: .5rem;
         color: $color-light;
@@ -26,6 +39,7 @@
         overscroll-behavior-x: contain;
         scroll-snap-type: x proximity;
         justify-content: flex-start;
+        align-items: center;
 
         &::-webkit-scrollbar {
             display: none;

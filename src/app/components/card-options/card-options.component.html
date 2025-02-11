@@ -1,12 +1,30 @@
-<section class="options" *ngIf="rolUser !== 'viewer' " >
+<section class="options" *ngIf="rolUser !== 'viewer' && !hasRevealedCards ">
   <p class="options__title">Elige una carta 👇</p>
-  <div class="options__cards" >
-    <button 
-      *ngFor="let card of cardFibonacciOptions; let i = index" (click)="selectCard(card)"
-      class="options__cards__button" 
-      [ngClass]="{'options__cards__button--selected': card.selected}"
-      >
+  <div class="options__cards">
+    <button *ngFor="let card of cardFibonacciOptions; let i = index" (click)="selectCard(card)"
+      class="options__cards__button" [ngClass]="{'options__cards__button--selected': card.selected}">
       {{card.score}}
     </button>
+  </div>
+</section>
+
+<section class="options" *ngIf="hasRevealedCards">
+  <div class="options__cards">
+    <div *ngFor="let score of scoreCount | keyvalue">
+      <button class="options__cards__button">
+        {{score.key}}
+      </button>
+      <p class="options__cards__votes">{{ score.value == 1 ? (score.value + ' voto') :(score.value + ' votos') }}</p>
+    </div>
+    <div *ngIf="scoreQuestion.length >= 1" >
+      <button class="options__cards__button">
+        {{scoreQuestion[0]}}
+      </button>
+      <p class="options__cards__votes">{{ scoreQuestion.length == 1 ? (scoreQuestion.length + ' voto') :(scoreQuestion.length + ' votos') }}</p>
+    </div>
+    <div class="options__average">
+      <p class="options__average__title">Puntaje</p>
+      <p class="options__average__score">{{averageScore}}</p>
+    </div>
   </div>
 </section>
