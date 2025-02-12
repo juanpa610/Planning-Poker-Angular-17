@@ -65,7 +65,8 @@ describe('GameService', () => {
 
   it('should meit card score ', () => {
     let cardMock: Card = {
-      score: '5'
+      score: '5',
+      selected : false
     }
 
     service.cardScore$.subscribe((card) => {
