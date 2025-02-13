@@ -17,7 +17,7 @@ interface Score {
 })
 export class CardOptionsComponent implements OnInit {
 
-  rolUser: Role = 'player';
+  roleUser: Role = 'player';
   hasRevealedCards: boolean = false;
   cardFibonacciOptions: Card[] = [
     { score: '0', selected: false },
@@ -41,7 +41,7 @@ export class CardOptionsComponent implements OnInit {
 
   ngOnInit() {
     this.gameService.roleUser$.subscribe((roleUser) => {
-      this.rolUser = roleUser;
+      this.roleUser = roleUser;
     });
 
     this.gameService.hasRevealedCards$.subscribe((hasRevealedCard) => {
@@ -59,21 +59,8 @@ export class CardOptionsComponent implements OnInit {
   }
 
   selectCard(card: Card) {
-    let curentSelectedCard = this.cardFibonacciOptions.find(card => card.selected);
-    // if (curentSelectedCard) curentSelectedCard.selected = false;
-    if (curentSelectedCard) {
-      let indexSelectedCard = this.cardFibonacciOptions.indexOf(curentSelectedCard);
-      this.cardFibonacciOptions[indexSelectedCard]!.selected = false;
-    }
     card.selected = true;
     this.gameService.setCartScore(card);
-  }
-
-  selectCardRandom() {
-    const indexRandom = Math.floor(Math.random() * this.cardFibonacciOptions.length);
-    const score = this.cardFibonacciOptions[indexRandom].score;
-    const scoreFinal = score == '?' || score == '☕' ? score : parseInt(score);
-    // console.log(scoreFinal);
   }
 
   calculateAverageCards(usersCards: User[]) {
@@ -83,6 +70,8 @@ export class CardOptionsComponent implements OnInit {
     this.scoreQuestion = usersCardsToFilter
       .filter((users: User) => users.score == '?')
       .map(user => user.score);
+
+      console.log(this.scoreQuestion)
 
     let scoresNumbers = usersCardsToFilter
       .filter(users => users.score != '?' && users.score != '☕')
@@ -97,9 +86,9 @@ export class CardOptionsComponent implements OnInit {
 
     scoresNumbers.forEach(score => {
       if (scoreCount[score]) {
-        scoreCount[score] = scoreCount[score] + 1
+        scoreCount[score] = scoreCount[score] + 1;
       } else {
-        scoreCount[score] = 1
+        scoreCount[score] = 1;
       }
     });
 

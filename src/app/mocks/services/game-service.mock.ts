@@ -3,12 +3,12 @@ import * as users from '../users';
 import { Card, Role, User } from '@gameInterface';
 
 
-const _userNameSubject = new BehaviorSubject<string>('loading');
-const _roleUserSubject = new BehaviorSubject<Role>('playerOwner');
+const _userNameSubject = new Subject<string>();
+const _roleUserSubject = new Subject<Role>();
 const cardSubject = new Subject<Card>();
 const isSelectedcardSubject = new Subject<boolean>();
 const hasRevealedCardsSubject = new Subject<boolean>();
-const gameNameSubject = new BehaviorSubject<string>('Sprint 32');
+const gameNameSubject = new Subject<string>();
 const _usersCardsScoreSubject = new Subject<User[]>();
 
 export const gameServiceMock = {

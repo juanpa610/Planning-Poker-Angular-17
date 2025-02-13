@@ -1,4 +1,4 @@
-<section class="options" *ngIf="rolUser !== 'viewer' && !hasRevealedCards ">
+<section class="options" *ngIf="roleUser !== 'viewer' && !hasRevealedCards ">
   <p class="options__title">Elige una carta 👇</p>
   <div class="options__cards">
     <button *ngFor="let card of cardFibonacciOptions; let i = index" (click)="selectCard(card)"

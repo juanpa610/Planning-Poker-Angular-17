@@ -12,8 +12,8 @@ import { GameService } from '@gameService';
 })
 export class HeaderGameComponent implements OnInit {
 
-  gameName: string = '';
   userName: string = '';
+  gameName: string = '';
 
   constructor(private gameService: GameService) {
   }
@@ -23,14 +23,12 @@ export class HeaderGameComponent implements OnInit {
   }
 
   getNames() {
-    if (sessionStorage.getItem('gameName')) this.gameName = sessionStorage.getItem('gameName')!;
-    if (sessionStorage.getItem('userName')) this.userName = sessionStorage.getItem('userName')!;
     this.gameService.userName$.subscribe((userName: string) => {
-      userName = userName.trim();
+      this.userName = userName.trim();
     });
 
     this.gameService.gameName$.subscribe((gameName: string) => {
-      gameName = gameName.trim();
+      this.gameName = gameName.trim();
     });
   }
 

@@ -4,19 +4,19 @@ export const users: {users : User[]} = {
   users: [
     {
       "id": 1,
-      "score": '0',
+      "score": '1',
       "name": "Oscar",
       "role" : "player"
     },
     {
       "id": 2,
-      "score": '0',
+      "score": '3',
       "name": "David",
       "role" : "viewer"
     },
     {
       "id": 3,
-      "score": '0',
+      "score": '3',
       "name": "Albert",
       "role" : "player"
     },
@@ -28,19 +28,19 @@ export const users: {users : User[]} = {
     },
     {
       "id": 5,
-      "score": '0',
+      "score": '5',
       "name": "Nata",
       "role" : "player"
     },
     {
       "id": 6,
-      "score": '0',
+      "score": '3',
       "name": "Carlos",
       "role" : "player"
     },
     {
       "id": 7,
-      "score": '0',
+      "score": '?',
       "name": "Vale",
       "role" : "player"
     }

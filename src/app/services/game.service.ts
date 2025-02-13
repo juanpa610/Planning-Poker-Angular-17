@@ -8,13 +8,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GameService {
 
-  private _userName: string = 'loading';
   private _roleUser: Role = 'playerOwner';
 
-  private _userNameSubject = new BehaviorSubject<string>(this._userName);
+  private _userNameSubject = new Subject<string>();
   userName$ = this._userNameSubject.asObservable();
 
-  private _roleUserSubject = new BehaviorSubject<Role>(this._roleUser);
+  private _roleUserSubject = new Subject<Role>();
   roleUser$ = this._roleUserSubject.asObservable();
 
   private cardSubject = new Subject<Card>();
@@ -26,7 +25,7 @@ export class GameService {
   private hasRevealedCardsSubject = new Subject<boolean>();
   hasRevealedCards$ = this.hasRevealedCardsSubject.asObservable();
 
-  private gameNameSubject = new BehaviorSubject<string>('Sprint 32');
+  private gameNameSubject = new Subject<string>();
   gameName$ = this.gameNameSubject.asObservable();
 
   private _usersCardsScoreSubject = new Subject<User[]>();
