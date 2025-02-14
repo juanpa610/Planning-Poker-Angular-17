@@ -46,8 +46,8 @@ export class FormUserComponent implements OnInit {
       this.gameService.setUserName(this.formUser.get('userName')?.value);
       this.gameService.setRoleUser(this.formUser.get('role')?.value);
       setTimeout(() => {
-        this.loadingService.hide();
         this.showModalUserForm = false;
+        this.loadingService.hide();
       }, 3000);
     }
   }

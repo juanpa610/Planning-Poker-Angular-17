@@ -7,28 +7,29 @@ import { loadingServiceMock } from '../../mocks/services/loading-service.mock';
 import { GameService } from '@gameService';
 import { gameServiceMock } from '../../mocks/services/game-service.mock';
 
+const localStorageMock = (() => {
+  let store: Record<string, string> = {};
+
+  return {
+    setItem: (key: string, value: string) => {
+      store[key] = value;
+    },
+    getItem:  (key: string) => {
+      return store[key] || null;
+    },
+    removeItem: function (key: string) {
+      delete store[key];
+    },
+    clear: () => {
+      store = {};
+    }
+  };
+})();
+
 describe('FormUserComponent', () => {
   let component: FormUserComponent;
   let fixture: ComponentFixture<FormUserComponent>;
 
-  const localStorageMock = (() => {
-    let store: Record<string, string> = {};
-  
-    return {
-      setItem: (key: string, value: string) => {
-        store[key] = value;
-      },
-      getItem:  (key: string) => {
-        return store[key] || null;
-      },
-      removeItem: function (key: string) {
-        delete store[key];
-      },
-      clear: () => {
-        store = {};
-      }
-    };
-  })();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -52,6 +53,7 @@ describe('FormUserComponent', () => {
   afterEach(() => {
     sessionStorage.clear();
     jest.clearAllMocks();
+    jest.useRealTimers();
   })
 
   it('should create', () => {
@@ -94,5 +96,78 @@ describe('FormUserComponent', () => {
     expect(spySessionStorage).toBeCalledWith('userName', formUserMock.userName);
   });
 
+  it('should return true when formUser is valid', () => {
+    const formUserMock = {
+      userName : '',
+      role : 'player'
+    };
+
+    const spySessionStorage = jest.spyOn(window.sessionStorage, 'setItem');
+
+    component.formUser.patchValue(formUserMock);
+    component.onSubmit();
+
+    expect(component.formUser.valid).not.toBeTruthy();
+    expect(loadingServiceMock.show).not.toBeCalled();
+    expect(sessionStorage.getItem('userName')).toBeNull();
+    expect(spySessionStorage).not.toBeCalled();
+  });
+
+  it('should call loadingService hide method after timeout', () => {
+    jest.useFakeTimers();
+    
+    const formUserMock = {
+      userName : 'juanito',
+      role : 'player'
+    };
+
+    component.formUser.patchValue(formUserMock);
+    component.onSubmit();
+
+    expect(gameServiceMock.setRoleUser).toBeCalled();
+    jest.advanceTimersByTime(3000);
+
+    expect(component.showModalUserForm).toEqual(false);
+    expect(loadingServiceMock.hide).toBeCalled();
+  });
+
+  it('should return messages for validation if userName is invalid', () => {
+    component.formUser.controls['userName'].setErrors({ required: true });
+    expect(component.getUserNameError()).toBe('Por favor ingresa un nombre');
+
+    component.formUser.controls['userName'].setErrors({ minlength: true });
+    expect(component.getUserNameError()).toBe('Por favor ingresa minimo 5 caracteres');
+    
+    component.formUser.controls['userName'].setErrors({ maxlength: true });
+    expect(component.getUserNameError()).toBe('Solo se permiten 20 caracteres');
+ 
+    component.formUser.controls['userName'].setErrors({ pattern: true });
+    expect(component.getUserNameError()).toBe('Solo se permiten 3 numeros');
+ 
+    component.formUser.controls['userName'].setErrors(null);
+    expect(component.getUserNameError()).toBe('');
+  });
+
+  it('should validate charaters in userName', () => {
+    component.formUser.patchValue({ userName: 'Hola123 Ññ' });
+    component.validateCharacterForm();
+    expect(component.formUser.controls['userName'].value).toBe('Hola123 Ññ');
+ 
+    component.formUser.patchValue({ userName: 'Us#er@name$' });
+    component.validateCharacterForm();
+    expect(component.formUser.controls['userName'].value).toBe('Username');
+
+    component.formUser.patchValue({ userName: 'Hello 😊 World' });
+    component.validateCharacterForm();
+    expect(component.formUser.controls['userName'].value).toBe('Hello  World');
+
+    component.formUser.patchValue({ userName: '' });
+    component.validateCharacterForm();
+    expect(component.formUser.controls['userName'].value).toBe('');
+
+    component.formUser.patchValue({ userName: undefined });
+    component.validateCharacterForm();
+    expect(component.formUser.controls['userName'].value).toBe('');
+  });
 
 });
