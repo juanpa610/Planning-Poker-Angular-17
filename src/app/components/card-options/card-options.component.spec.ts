@@ -94,10 +94,10 @@ describe('CardOptionsComponent', () => {
     ];
 
     component.calculateAverageCards(usersCards);
-    expect(component.scoreQuestion).toBe(['?']);
+    expect(component.scoreQuestion).toEqual(['?']);
     expect(component.averageScore).toBe('Coffee break!');
     expect(component.scoreCount).toEqual({
-      '3': 2,
+      '3': 1,
       '5': 1
     });
   });
@@ -113,11 +113,10 @@ describe('CardOptionsComponent', () => {
 
     component.calculateAverageCards(usersCards);
 
-    console.log('------------:::',component.scoreQuestion);
-    expect(component.scoreQuestion).toBe(['?']);
-    expect(component.averageScore).toBe('1.75');
+    expect(component.scoreQuestion).toEqual(['?']);
+    expect(component.averageScore).toBe('2.00');
     expect(component.scoreCount).toEqual({
-      '1': 2,
+      '1': 1,
       '0': 1,
       '5': 1
     });

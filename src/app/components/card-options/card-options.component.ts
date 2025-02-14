@@ -71,8 +71,6 @@ export class CardOptionsComponent implements OnInit {
       .filter((users: User) => users.score == '?')
       .map(user => user.score);
 
-      console.log(this.scoreQuestion)
-
     let scoresNumbers = usersCardsToFilter
       .filter(users => users.score != '?' && users.score != '☕')
       .map(user => Number(user.score));
